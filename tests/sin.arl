@@ -1,0 +1,23 @@
+float abs(float x) {
+    if (x < 0.0) {
+        return -x;
+    }
+    return x;
+}
+
+float sin(float x) {
+    float n;
+    float t = x;
+    float s = x;
+    float epsilon = 0.000001;
+    for (n = 3.0; abs(t) > epsilon; n += 2.0) {
+        t *= -(x / n) * (x / (n - 1.0));
+        s += t;
+    }
+    return s;
+}
+
+float x;
+for (x = -3.141; x < 3.141; x += 0.39) {
+    println("sin(", x, ") ≈ ", sin(x));
+}

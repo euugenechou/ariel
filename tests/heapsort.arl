@@ -1,0 +1,72 @@
+void swap(int A[], int i, int j) {
+    int temp = A[i];
+    A[i] = A[j];
+    A[j] = temp;
+}
+
+int max_child(int A[], int first, int last) {
+    int left = first * 2;
+    int right = left + 1;
+    int child = left;
+
+    if (right <= last) {
+        if (A[left - 1] < A[right - 1]) {
+            child = right;
+        }
+    }
+
+    return child;
+}
+
+void fix_heap(int A[], int first, int last) {
+    bool found = false;
+    int parent = first;
+    int larger = max_child(A, parent, last);
+
+    while (parent <= last / 2 && !found) {
+        if (A[parent - 1] < A[larger - 1]) {
+            swap(A, parent - 1, larger - 1);
+            parent = larger;
+            larger = max_child(A, parent, last);
+        } else {
+            found = true;
+        }
+    }
+}
+
+void build_heap(int A[], int first, int last) {
+    for (int parent = last / 2; parent >= first; parent -= 1) {
+        fix_heap(A, parent, last);
+    }
+}
+
+void heapsort(int A[], int n) {
+    int first = 1;
+    int last = n;
+    build_heap(A, first, last);
+    for (int leaf = last; leaf >= first + 1; leaf -= 1) {
+        swap(A, first - 1, leaf - 1);
+        fix_heap(A, first, leaf - 1);
+    }
+}
+
+void print_array(int A[], int n) {
+    for (int i = 0; i < n; i += 1) {
+        if (i > 0 && (i % 6 == 0)) {
+            println();
+        }
+        print(A[i]);
+        if ((i + 1) % 6 != 0 && (i + 1) != n) {
+            print(", ");
+        }
+    }
+    println();
+}
+
+int arr[100];
+for (int i = 0; i < 100; i += 1) {
+    arr[i] = rand() & ((1 << 12) - 1);
+}
+
+heapsort(arr, 100);
+print_array(arr, 100);

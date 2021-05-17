@@ -1,0 +1,58 @@
+int roll() {
+    return rand() % 6;
+}
+
+int left(int i, int n) {
+    return (i + n - 1) % n;
+}
+
+int right(int i, int n) {
+    return (i + 1) % n;
+}
+
+int min(int x, int y) {
+    if (x < y) {
+        return x;
+    }
+    return y;
+}
+
+int pot = 0;
+int players = 4;
+bool over = false;
+int bank[] = { 3, 3, 3, 3 };
+string names[] = { "Charlie", "Snoopy", "Linus", "Lucy" };
+
+for (int pos = 0; !over; pos = right(pos, players)) {
+    if (bank[pos] + pot == 3 * players) {
+        println(names[pos], " wins $", bank[pos], " with $", pot, " in the pot!");
+        over = true;
+    }
+    if (!over && bank[pos] > 0) {
+        int rolls = min(3, bank[pos]);
+        print(names[pos], " rolls...");
+        while (rolls > 0) {
+            int rolled = roll();
+            if (rolled == 0) {
+                print(" passes to ", names[left(pos, players)]);
+                bank[left(pos, players)] += 1;
+                bank[pos] -= 1;
+            }
+            if (rolled == 1) {
+                print(" passes to ", names[right(pos, players)]);
+                bank[right(pos, players)] += 1;
+                bank[pos] -= 1;
+            }
+            if (rolled == 2) {
+                print(" puts $1 in the pot");
+                bank[pos] -= 1;
+                pot += 1;
+            }
+            if (rolled >= 3) {
+                print(" gets a pass");
+            }
+            rolls -= 1;
+        }
+        println();
+    }
+}

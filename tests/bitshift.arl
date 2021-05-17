@@ -1,0 +1,12 @@
+int bitwidth(int x) {
+    int width = 0;
+    while (x > 0) {
+        width += 1;
+        x >>= 1;
+    }
+    return width;
+}
+
+for (int i = 0; i <= 128; i += 1) {
+    println("bitwidth(", i, ") = ", bitwidth(i));
+}

@@ -1,0 +1,47 @@
+int set_empty() {
+    return 0;
+}
+
+int set_insert(int s, int x) {
+    return s | (1 << x);
+}
+
+int set_remove(int s, int x) {
+    return s & ~(1 << x);
+}
+
+int set_member(int s, int x) {
+    return s & (1 << x);
+}
+
+int set_union(int s, int t) {
+    return s | t;
+}
+
+int set_intersect(int s, int t) {
+    return s & t;
+}
+
+int set_difference(int s, int t) {
+    return s & ~t;
+}
+
+int set_complement(int s) {
+    return ~s;
+}
+
+int s = set_empty();
+
+for (int i = 0; i < 10; i += 1) {
+    int x = rand() % 32;
+    s = set_insert(s, x);
+    s = set_remove(s, x);
+}
+
+s = set_complement(s);
+
+for (int i = 0; i < 32; i += 1) {
+    if (set_member(s, i) > 0) {
+        println(i, " was inserted to the set");
+    }
+}

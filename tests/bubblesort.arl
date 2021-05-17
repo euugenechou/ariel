@@ -1,0 +1,36 @@
+void bubblesort(int A[], int n) {
+    bool swapped = true;
+    while (swapped) {
+        swapped = false;
+        for (int i = 1; i < n; i += 1) {
+            if (A[i] < A[i - 1]) {
+                int temp = A[i - 1];
+                A[i - 1] = A[i];
+                A[i] = temp;
+                swapped = true;
+            }
+        }
+        n -= 1;
+    }
+}
+
+void print_array(int A[], int n) {
+    for (int i = 0; i < n; i += 1) {
+        if (i > 0 && (i % 6 == 0)) {
+            println();
+        }
+        print(A[i]);
+        if ((i + 1) % 6 != 0 && (i + 1) != n) {
+            print(", ");
+        }
+    }
+    println();
+}
+
+int arr[100];
+for (int i = 0; i < 100; i += 1) {
+    arr[i] = rand() & ((1 << 12) - 1);
+}
+
+bubblesort(arr, 100);
+print_array(arr, 100);
